@@ -1,0 +1,10 @@
+---
+layout: post
+title:  "Luomann.github.io"
+date:   2017-12-26 21:32:00 +0800
+categories: jekyll update
+---
+This is a test for the static blog with Jekyll. And will sync to my GitHub
+Pages. Check out the [Luomann.github.io][luomann-github]
+
+[luomann-github]: https://Luomann.github.io
