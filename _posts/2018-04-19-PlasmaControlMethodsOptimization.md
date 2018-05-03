@@ -16,7 +16,7 @@ The magnetic filed has two components (as show in Fig. 1)
 
 The plasma current is obtained by induction from currents in these poloidal field coils. The tokamak thus appears as a transformer whose plasma is the secondary. **The currents in the external coils play another role, that of creating and controlling the equilibrium of the plasma**. The <font color=red> goal</font> of this paper is to provide a model for the evolution in time of the equilibrium of the plasma and to derive control methods in order to optimize a typical scenario of a discharge of the plasma in a tokamak.
 
-![Fig_1](../img/tokamak_schematic.jpg)
+<!--![Fig_1](../img/tokamak_schematic.jpg)-->
 
 There are two approaches for simulating a plasma made of electrons and ions:
 
