@@ -337,7 +337,7 @@ Reference shot: 77475 (75704) MIMO
 
 Reference shot:
 
-future shot: 78140_54265: based on shot 78140, calling 78160 IP control category, then set "limitedcontrol" algorithm M matrix for  IP control to 0; then all phase algorithm M matrix for IP control to 0; Using 54265 M matrix for ITER-like control setting to USN2 in isousn phase. (But this M matrix is to LSN, make sure it match to USN !!!, Zx1 M matrix value should be reversed) & correspond PID parameters.
+future shot: 78140_54265: based on shot 78140, calling 78160 IP control category, then set "limitedcontrol" algorithm M matrix for  IP control to 0; then all phase algorithm M matrix for IP control to 0; Using **54265** M matrix for ITER-like control setting to USN2 in isousn phase. (But this M matrix is to LSN, make sure it match to USN !!!, Zx1 M matrix value should be reversed) & correspond PID parameters.
 
 1. 78182 normal shape discharge, ramp-down. Remove PEFIT algorithm, using RTEFIT. Get rid of PCS watchdog problem.
 
@@ -402,51 +402,100 @@ Based on 78186, using calculated FF for USN shape discharge for UQSF comparison 
 | 78242       | increase both ZX1_GP & GD 2 times                            | shorter plasma            | It seems the PID can not adjusted                            |
 | 78243       | Restore 78240, modify ZX1_Taup, ZX2_TauD                     |                           | 减小了延迟，增大噪声，观察控制能力是否好转                   |
 | 78244       |                                                              |                           |                                                              |
-|             |                                                              |                           |                                                              |
-|             |                                                              |                           |                                                              |
-|             |                                                              |                           |                                                              |
 
-|           |                                                              |                                        |                                                         |
-| --------- | ------------------------------------------------------------ | -------------------------------------- | ------------------------------------------------------- |
-| 78254     | restore 78144, remove FL35                                   | repeat, 6.21s                          |                                                         |
-| 78255     | reduce density target                                        | 3.12s, oscillation                     |                                                         |
-| **78256** | repeat, reduce cpu3 sample intervals to save all density signal | 6.75s **good**                         | ramp-down phase                                         |
-| 78257     | Repeat, introduce GI for all segs in ISOUSN                  | **watchdog** red light                 |                                                         |
-| **78258** | repeat 78257, GI=5 for all segs with Italy's MIMO matrix (2) | **Good**                               |                                                         |
-| 78259     | Repeat, switch to wyh's MIMO matrix                          | 3.5s Bad                               | 汪悦航的MIMO矩阵                                        |
-| **78260** | Repeat 78258, but GI=10                                      | 7.18s **Good**                         |                                                         |
-| **78261** | Repeat, launch PEFIT transition algorithm                    | 7.25s                                  | 黄耀的PEFIT过渡算法启用                                 |
-| 78262     | Repeat 78259, new MIMO matrix without GI on segs             | 6.6s not bad                           | 汪悦航的MIMO矩阵                                        |
-| 78264     | Restore 78260, reduce IP target from 300kA (4.5s) to 250kA (5.5s) | 5.58s                                  | 试着                                                    |
-| **78265** | Restore 78260， increase IP target from 300kA (4.5s) to 320kA (5.5s) | 6.2s **not bad**                       | 前馈不合适了，MIMO矩阵也可能需要更新                    |
-| 78266     | Repeat, set Taud=1ms, GD=10 for all segments in isousn phase | 1.3s gas injection                     | 强充气导致等离子体熄灭                                  |
-| 78267     | Repeat 78266                                                 | 2.95s Gd量大了                         |                                                         |
-| 78268     | Repeat, set Taud=1ms, GD=5 for all segments in isousn phase, set k2=0.1 (from 0.081) in VS controller | DAQ problem?? No breakdown             |                                                         |
-| 78269     | Repeat 78268,                                                | 2.8s                                   | Fast Z控制变好                                          |
-| 78270     | Repeat, set GD=1 for all segments in isousn phase, set k2=0.09 (from 0.1) in VS controller | 2.89s                                  |                                                         |
-| **78271** | Restore 78265                                                | 7.1s **Good**                          |                                                         |
-|           |                                                              |                                        |                                                         |
-| 78272     | restore 78262, add GI for segments                           |                                        |                                                         |
-|           | **USN shape discharge**                                      |                                        | 试图建立USN参考位形                                     |
-| **78273** | Based on 78271, using ff from future shot 78186_usn_qsfCom   | 2.9s. Not bad.                         | Lost control after switching to Isoflux USN             |
-| 78274     | Using new MIMO matrix "usnwyh", launch PEFIT transition algorithm (2.7--> 3.0s) | 3.2s Not bad, but PF5 over current     | USN                                                     |
-| **78275** | Switch to MIMO matrix back to 28273 (usnitaly)               | 3.1s                                   | $\gamma \approx 520$ USN                                |
-|           |                                                              |                                        |                                                         |
-| 78276     | restore 78262, Gp for br & bz reversed (wyh MIMO ctrl)       | ramp-down                              | 为验证wyh的反馈控制方向？ QSF                           |
-| 78277     | Restore 78275, $k1 \times 1.5$ (3.225e-4) & $k2 \times 1.5$ (0.1215) | 2.74s, fast z ctrl becomes better      | 似乎是杂质？ QSF                                        |
-| **78278** | Repeat 78277                                                 | 2.75s VDE  problem                     | bigger $\gamma$**USN**                                  |
-| 79279     | Rstore 78261 with new calculated MIMO matrix (wyh)           | 6.7s. ramp-down                        | 计算矩阵时，Br和Bz方向调整为原来的负方向 QSF （汪悦航） |
-| 79280     | Repeat, tune gas injection                                   | ramp-down                              | QSF （汪悦航）                                          |
-| 79281     | Repeat, tune gas injection                                   | ramp-down                              | 太强充气 QSF（汪悦航）                                  |
-| 79282     | Repeat, add GI (5) for all segments                          | 4.0s control errors become bigger, bad | QSF 密度高，无SMBI3 （汪悦航）                          |
-| 78283     | Restore **78278**                                            | 2.75s VDE problem?                     | **USN** discharge                                       |
-| **78284** | Repeat, $k_1 \times 2/3$ (1.433e-4)& $k_2 \times 2/3 $ (0.054) | 6.55s **Good**                         | USN                                                     |
-| **78285** | Based on 78284, calling 71464 (UQSF) ff current (only load Rref, Zref in limitedcontrl) | 6.7s **Good**                          | **UQSF**                                                |
-| 78286     | Repeat, using 71464 basis shape in isousn (load all Rref, Zref, Zx1ref in limitedctrl & newrz) | 2.13s Bad                              | UQSF                                                    |
-| 78287     | Repeat 78285, but using 71464 basis shape                    | **bad**                                | UQSF                                                    |
-| 78288     | Restore 78285, using 71464 basis shape, tune IP at 0.2s & Rref at 0,2s | 3.96s SMBI3 gas in                     | UQSF 充气导致？                                         |
-| **78289** | Repeat，call 78282 gas injection                             | 6.9s **Good**                          | UQSF                                                    |
-| **78290** | Repeat, using 78284 FF                                       | 7.5s **Good**                          | USN                                                     |
-| 78291     | Repeat 78289                                                 | 3.52s Bad                              | UQSF 充气                                               |
-|           |                                                              |                                        |                                                         |
+| shot number | setting                                                      | results                                | comments                                                |
+| ----------- | ------------------------------------------------------------ | -------------------------------------- | ------------------------------------------------------- |
+| 78254       | restore 78144, remove FL35                                   | repeat, 6.21s                          |                                                         |
+| 78255       | reduce density target                                        | 3.12s, oscillation                     |                                                         |
+| **78256**   | repeat, reduce cpu3 sample intervals to save all density signal | 6.75s **good**                         | ramp-down phase                                         |
+| 78257       | Repeat, introduce GI for all segs in ISOUSN                  | **watchdog** red light                 |                                                         |
+| **78258**   | repeat 78257, GI=5 for all segs with Italy's MIMO matrix (2) | **Good**                               |                                                         |
+| 78259       | Repeat, switch to wyh's MIMO matrix                          | 3.5s Bad                               | 汪悦航的MIMO矩阵                                        |
+| **78260**   | Repeat 78258, but GI=10                                      | 7.18s **Good**                         |                                                         |
+| **78261**   | Repeat, launch PEFIT transition algorithm                    | 7.25s                                  | 黄耀的PEFIT过渡算法启用                                 |
+| 78262       | Repeat 78259, new MIMO matrix without GI on segs             | 6.6s not bad                           | 汪悦航的MIMO矩阵                                        |
+| 78264       | Restore 78260, reduce IP target from 300kA (4.5s) to 250kA (5.5s) | 5.58s                                  | 试着                                                    |
+| **78265**   | Restore 78260， increase IP target from 300kA (4.5s) to 320kA (5.5s) | 6.2s **not bad**                       | 前馈不合适了，MIMO矩阵也可能需要更新                    |
+| 78266       | Repeat, set Taud=1ms, GD=10 for all segments in isousn phase | 1.3s gas injection                     | 强充气导致等离子体熄灭                                  |
+| 78267       | Repeat 78266                                                 | 2.95s Gd量大了                         |                                                         |
+| 78268       | Repeat, set Taud=1ms, GD=5 for all segments in isousn phase, set k2=0.1 (from 0.081) in VS controller | DAQ problem?? No breakdown             |                                                         |
+| 78269       | Repeat 78268,                                                | 2.8s                                   | Fast Z控制变好                                          |
+| 78270       | Repeat, set GD=1 for all segments in isousn phase, set k2=0.09 (from 0.1) in VS controller | 2.89s                                  |                                                         |
+| **78271**   | Restore 78265                                                | 7.1s **Good**                          |                                                         |
+|             |                                                              |                                        |                                                         |
+| 78272       | restore 78262, add GI for segments                           |                                        |                                                         |
+|             | **USN shape discharge**                                      |                                        | 试图建立USN参考位形                                     |
+| **78273**   | Based on 78271, using ff from future shot 78186_usn_qsfCom   | 2.9s. Not bad.                         | Lost control after switching to Isoflux USN             |
+| 78274       | Using new MIMO matrix "usnwyh", launch PEFIT transition algorithm (2.7--> 3.0s) | 3.2s Not bad, but PF5 over current     | USN                                                     |
+| **78275**   | Switch to MIMO matrix back to 28273 (usnitaly)               | 3.1s                                   | $\gamma \approx 520$ USN                                |
+|             |                                                              |                                        |                                                         |
+| 78276       | restore 78262, Gp for br & bz reversed (wyh MIMO ctrl)       | ramp-down                              | 为验证wyh的反馈控制方向？ QSF                           |
+| 78277       | Restore 78275, $k1 \times 1.5$ (3.225e-4) & $k2 \times 1.5$ (0.1215) | 2.74s, fast z ctrl becomes better      | 似乎是杂质？ QSF                                        |
+| **78278**   | Repeat 78277                                                 | 2.75s VDE  problem                     | bigger $\gamma$**USN**                                  |
+| 79279       | Rstore 78261 with new calculated MIMO matrix (wyh)           | 6.7s. ramp-down                        | 计算矩阵时，Br和Bz方向调整为原来的负方向 QSF （汪悦航） |
+| 79280       | Repeat, tune gas injection                                   | ramp-down                              | QSF （汪悦航）                                          |
+| 79281       | Repeat, tune gas injection                                   | ramp-down                              | 太强充气 QSF（汪悦航）                                  |
+| 79282       | Repeat, add GI (5) for all segments                          | 4.0s control errors become bigger, bad | QSF 密度高，无SMBI3 （汪悦航）                          |
+| 78283       | Restore **78278**                                            | 2.75s VDE problem?                     | **USN** discharge                                       |
+| **78284**   | Repeat, $k_1 \times 2/3$ (1.433e-4)& $k_2 \times 2/3 $ (0.054) | 6.55s **Good**                         | USN                                                     |
+| **78285**   | Based on 78284, calling 71464 (UQSF) ff current (only load Rref, Zref in limitedcontrl) | 6.7s **Good**                          | **UQSF**                                                |
+| 78286       | Repeat, using 71464 basis shape in isousn (load all Rref, Zref, Zx1ref in limitedctrl & newrz) | 2.13s Bad                              | UQSF                                                    |
+| 78287       | Repeat 78285, but using 71464 basis shape                    | **bad**                                | UQSF                                                    |
+| 78288       | Restore 78285, using 71464 basis shape, tune IP at 0.2s & Rref at 0,2s | 3.96s SMBI3 gas in                     | UQSF 充气导致？                                         |
+| **78289**   | Repeat，call 78282 gas injection                             | 6.9s **Good**                          | UQSF                                                    |
+| **78290**   | Repeat, using 78284 FF                                       | 7.5s **Good**                          | USN                                                     |
+| 78291       | Repeat 78289                                                 | 3.52s Bad                              | UQSF 充气                                               |
+|             |                                                              |                                        |                                                         |
+
+
+
+## 2018/07/04
+
+78373: restore 78209, open PFC MIMO (System), IC voltage-driven mode; Lost control after 2.78s.
+
+
+
+## 2018/07/09
+
+78663:wyh，test  for X-point MIMO control.  fl34坏了导致PEFIT重建错误，控制误差计算也是错误的。实验结果无法判断有效。
+
+
+
+### 2018/07/10
+
+-----------------------------------------------
+
+实验计划：
+
+1. 2.9s加入LHW 4.6G 基底（0.6MW？）， ECR3 0.5MW，保证L模；3.0s到4.5s密度到2.5；4.6s开始升功率到满功率; (4 shots+2shots gas injection)
+
+**Reference shot:** 78289 & 78290 (x 未完成)
+
+2. MIMO control
+
+3. Vloop calculated dz/dt for vertical control
+
+4. Radiative feedback test (piggyback)
+
+**Shot lists:**
+
+**IC voltage-drive mode**.
+
+| shot number | setting                                                      | results                                    | comments                                                     |
+| ----------- | ------------------------------------------------------------ | ------------------------------------------ | ------------------------------------------------------------ |
+| 78787       | Restore **78289**, call LHW (2.45G 0.5MW; 4.6G 0.6MW) & ECR3 in at 2.9s; Density target: 1.2 | Bad density FB. 2.95s                      | Wrong setting for Density FB from POINT                      |
+| 78788       | Repeat, ECR3 start at 4.5s (pulse 2s), LHW 2.45G start at 2.9s, 4.6G from 4.6s (PCS ctrl); density 1.2; | 4.6s; not good.                            | IT reduce 0.5kA for ECE                                      |
+| 78789       | Repeat, remove all RF heating.                               | 6.42s; oscillation                         | ohmic shot                                                   |
+| **78790**   | Repeat, tune density FF                                      | 7.45s; better                              | ohmic shot                                                   |
+| **78791**   | Repeat, ECR3 start at 4.5s (pulse 2s), LHW 2.45G start at 2.9s, 4.6G from 4.6s (PCS ctrl); density 1.2; | 6.16s;                                     | not too bad.                                                 |
+| 78792       | Repeat, increase density from 3.0s to 2.2 until 6.6s.        | 3.58s                                      | Seems MIMO ctrl has a bad  anti-interference                 |
+| 78793       | Restore 78260, 4.0s disturb on PF7&8 to test $dz/dt$ calculation from vloop measurements | bad;density control bad?                   | Is this the reason?                                          |
+| 78794       | Repeat, tune density ctrl                                    | bad                                        |                                                              |
+| **78795**   | Restore 78260, no modification at all                        | Good.                                      | Are there some differences for these  shots? Calibration data problem? |
+| **78796**   | Repeat, increase density from 2.9s (1.2) to 3.5s (2.0s) till ramp-down; After 4.0s call disturbance on PF7&8 for $dz/dt$ estimation by Vloop measurements | 5.0s. Good.                                |                                                              |
+| **78797**   | Repeat，slow velocity distrubance on PF7&8 after 5.0s.       | 7.1s; Good                                 | Provide calibration data for vloop differential calculation (VDC) for z estimator |
+| 78798       | Repeat, slow velocity disturbance same, with z estimator by vloop differential calculation on Ematrix 'rx1'; | 6.8s; not bad                              | The Z estimator by VDC is not consistent with lmsz & efit (zcur) |
+| 78799       | Restore 78373, start Italy IP control from 2.2s (2.7s for 78373); PFC MIMO ctrl turns on from the beginning | 2.2s; bad. Seems bad PFC MIMO ctrl?        | MIMO test for Italy colleague                                |
+| 78800       | Repeat, turn on PFC MIMO ctrl at 1.41s                       | 2.2s; Bad. Confirm the problem on PFC MIMO |                                                              |
+| 78801       | Restore 78262, new Mmatrix with increased  weight (2 times) on X-points (Both Br&Bz) & reduced weight (0.3 times) on seg 2,4 & 5. |                                            |                                                              |
 
