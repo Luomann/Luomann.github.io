@@ -461,9 +461,7 @@ Based on 78186, using calculated FF for USN shape discharge for UQSF comparison 
 
 
 
-### 2018/07/10
-
------------------------------------------------
+## 2018/07/10
 
 实验计划：
 
@@ -497,5 +495,53 @@ Based on 78186, using calculated FF for USN shape discharge for UQSF comparison 
 | 78798       | Repeat, slow velocity disturbance same, with z estimator by vloop differential calculation on Ematrix 'rx1'; | 6.8s; not bad                              | The Z estimator by VDC is not consistent with lmsz & efit (zcur) |
 | 78799       | Restore 78373, start Italy IP control from 2.2s (2.7s for 78373); PFC MIMO ctrl turns on from the beginning | 2.2s; bad. Seems bad PFC MIMO ctrl?        | MIMO test for Italy colleague                                |
 | 78800       | Repeat, turn on PFC MIMO ctrl at 1.41s                       | 2.2s; Bad. Confirm the problem on PFC MIMO |                                                              |
-| 78801       | Restore 78262, new Mmatrix with increased  weight (2 times) on X-points (Both Br&Bz) & reduced weight (0.3 times) on seg 2,4 & 5. |                                            |                                                              |
+| 78801       | Restore 78262, new Mmatrix with increased  weight (2 times) on X-points (Both Br&Bz) & reduced weight (0.3 times) on seg 2,4 & 5. | 3.1s, not good                             |                                                              |
+
+
+
+## 2018/07/13 (Friday)
+
+**Future shots:**
+
+| Name     | 78289_uqsf_siso                                              | 78290_usn_siso                                               | 75693_78373                                                  |
+| -------- | ------------------------------------------------------------ | ------------------------------------------------------------ | ------------------------------------------------------------ |
+| Setting  | 1. Restore 78289; 2. using limitedcontrol whole shot (no newrz now); 3.restore siso M matrix from 78185 (reversed M matrix from 54265 which is an iter-like LSN shape) | 1. Restore 78290; 2. using limitedcontrol whole shot (no newrz now); 3.restore siso M matrix from 78185 (reversed M matrix from 54265 which is an iter-like LSN shape) | 10s discharge, based 75693 (lost control after switching to isoflux), calling 78373 Discharge->short start; Modified the efit start time to 2.7s (consistent with isoflux), PEFIT->Isoflux Sequence to 4 (UpperSNull), keep effective magnetic diagnostics same as 78926 in efit & petit both. Restore 78373 "ip control" & "isoflux" category. Turn off the ip feedback on "limitedcontrl" & "newrz" phase. |
+| Comments | M matrix for 78289 is a MIMO matrix 'usnitaly'               | MIMO matrix 'usnitaly' for 78290                             | Feedforward isn't consistent between limitedcontrl & newrz, make it consistent. |
+
+**Plan:**
+
+- [x] PCS switch to new version for $dz/dt$ estimator by vloop measurements (before shot 78955)
+
+- [x] UQSF MIMO ctrl for italy colleague, future shot: 75693_78373
+  - [ ] can not repeat the shot, because of the newrz phase failed by $dz/dt$ estimator.
+- [ ] $dz/dt$ Vloop estimator (wyh)
+- [ ] gap control (hy)
+
+**Shot lists:**
+
+78955 - 56: Ohmic shot. Restore 78809. No breakdown. There are larger delay for plasma breakdown in 78955. Operators thought the PCS sytem update makes the breakdown failed. 
+
+78957: tune gas injection. **Good** ohmic shot. Which confirmed their guess is wrong.
+
+- [x] IC in voltage-driven mode
+
+| shot number | setting                                                      | results                                                      | comments                                                     |
+| ----------- | ------------------------------------------------------------ | ------------------------------------------------------------ | ------------------------------------------------------------ |
+| 78958       | restore future shot 75693_78373; remove rx2 PID              | Lost control after switching to vs ctrl (newrz phase) at 2.1s, the dz/dt estimator may give a wrong value after updating the algorithm. **Bad** | new pcs version for $dz/dt$ estimator by vloop measurements  |
+| 78959       | Repeat, remove the GP_rx2 in newrz phase. 4 Italy colleague  | Not bad. Lost control at 2.75s. Can get rid of the  VS algorithm. | Cycle time is wrong. Need pay more attention, because the stored segments error will be not correct. |
+| 78960       | restore 78260, PF7&8 disturbance between 4s to 6s for $dz/dt$ calibration | breakdown, but failed to ramp-up                             | rtefit did not works                                         |
+| 78961       | Repeat, tune gas injection at beginning                      | OK. 2.8s lost control. Did not reach the disturbance time window. Not works for calibration. |                                                              |
+| **78962**   | Repeat, start rtefit at 2.7s.                                | 6.59s. Good.                                                 | rtefit works fine.                                           |
+| 78963       | Repeat, using new $dz/dt$ estimator by vloop measurements with calibrated coefficients | 2.78s. Not good. Not too bad.                                | wyh's shot                                                   |
+| **78964**   | Restore 78959, modify the cycle time: CPU1~7   100 500 4000 100 1000 100 500 | 3.04s. Not bad.                                              | 4 Italy colleague                                            |
+| 78965       | restore 78957, gap ctrl test by hy & wyh                     | 1.0s. Not too bad..                                          | **1st Gap ctrl shot**.                                       |
+|             |                                                              |                                                              |                                                              |
+
+
+
+
+
+
+
+
 
