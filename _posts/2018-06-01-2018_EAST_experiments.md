@@ -537,6 +537,54 @@ Based on 78186, using calculated FF for USN shape discharge for UQSF comparison 
 | 78965       | restore 78957, gap ctrl test by hy & wyh                     | 1.0s. Not too bad..                                          | **1st Gap ctrl shot**.                                       |
 |             |                                                              |                                                              |                                                              |
 
+**Next week experiment plan meeting**
+
+Location: 1st floor meeting, Division 7
+
+
+
+## 2018/07/16 (Monday)
+
+- [x] Meeting with CREATE group to discuss the MIMO control experiments 
+  1. 1st floor meeting, 9:30AM - 
+  2. show the results: EAST MIMO ctrl, VS ctrl, Vloop $dz/dt$ estimator
+  3. discuss the experiment plan for this week
+- [x] **Future shot:** USN shot: **78290_usn_qsfCom**: based on 78290, using new FF based on scenario file "pcs_ff_180701.00030"
+- [x] **MIMO control**:
+
+**IC in voltage-driven mode** now, IT = -9kA (~2.0T)
+
+| shot number | setting                                                      | results                                         | comments                                                     |
+| ----------- | ------------------------------------------------------------ | ----------------------------------------------- | ------------------------------------------------------------ |
+| 79283       | Restore 78290,  using new M  matrix (usnitaly78290), using FF from futureshot :78290_usn_qsfCom | pcs watchdog                                    | 偶然事件？timeout; **USN**                                   |
+| 79284       | Repeat,                                                      | Good. 7.16s                                     | oscillation may come from the strong SMBI3 injection; **USN** |
+| 79285       | Repeat, tune the density FF to get rid of the SMBI3 strong injection | Good. 7.1s                                      | LHW (4.6G 1.2MW + 2.45G 0.4MW) may relieve the oscillation; **USN** |
+| 79286       | Repeat, turn off all LHW                                     | Good. 7.17s                                     | Smaller oscillation; **USN**                                 |
+| 79287       | Repeat, change GI to 500 (from 10), TauI to 50 (from 1)      | Good. 7.33s                                     | Br & Bz, seg06 becomes better, but seg08 & 09 worse. **USN** |
+| 79288       | Repeat， change GI from 500 to 1000， TauI from 50s to 100s  | Good. 7.4s                                      | Almost same with 79287; **USN**                              |
+| **79289**   | Restore 78289 Discharge shape & ISOFLUX category, change the MIMO matrix with new one (usnitalyQSF289) | Good. 7.53s                                     | Perfect. No oscillation; **UQSF**                            |
+| 79290       | Repeat, change GI to 1000 (from 10), TauI to 100 (from 1)    | Bad                                             | watch dog                                                    |
+| 79291       | Repeat 79290                                                 | big oscillation after 3.4s, 4s plasma died      | We don't know the reason, before 3.4s are same with last shot. |
+| 79292       | Repeat, change GI to 500 (from 1000), TauI to 50 (from 100)  | big oscillation 3.6s then lost ctrl after 4.23s | Still no ideal why?                                          |
+| **79293**   | Restore 79289                                                | Good. 7.44s                                     | Repeatable; UQSF                                             |
+| 79294       | Restore 78271, change M matrix (usnitalyQST78271)            | Good. 6.72s                                     | Repeatable ; UQSF 300kA                                      |
+| **79295**   | Restore 79289, calling LHW from 2.9s, increase density from 3.0s to 3.3s from 1.2 to 2 |                                                 | UQSF 250kA, MIMO ctrl                                        |
+|             |                                                              |                                                 |                                                              |
+
+- [x] **3rd shift**:
+
+| shot number | setting                                                      | results                 | comments                        |
+| ----------- | ------------------------------------------------------------ | ----------------------- | ------------------------------- |
+| 79296       | Restore 77140                                                | no effective            | wrong setting                   |
+| 79297       | Repeat 77140,                                                | breakdown, but bad ctrl | IC still in voltage-driven mode |
+| **79298**   | Repeat, tune the shot start, change IC to current-driven mode |                         | IC in current-driven mode now   |
+|             |                                                              |                         |                                 |
+|             | **Shot list can be found in LogBook.**                       |                         |                                 |
+
+沈晗弘 -- Miss Shen Heather(海瑟)
+
+
+
 
 
 
