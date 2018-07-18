@@ -585,7 +585,19 @@ Location: 1st floor meeting, Division 7
 
 
 
+## 2018/07/17 (Tuesday)
 
+- [x] MIMO ctrl with IC in voltage-driven mode
+
+| shot number | setting                                                      | results                                                      | comments                                     |
+| ----------- | ------------------------------------------------------------ | ------------------------------------------------------------ | -------------------------------------------- |
+| 79363       | Restore 79295, new FF at 3.0s & 6.0s; (LHW from 2.9s & increase density from 3.0s to 3.3s from 1.2 to 2) | Bad. 2.1s.  PID for RX2 need be zero with new PCS version (05_10.186) | Check the reliability of MIMO ctrl with UQSF |
+| **79364**   | Repeat, Setting PID for RX2 in limitedcontrol to zero in this  new PCS version (05_10.186) | 3.5s. Oscillation too. Saturated voltage required            | UQSF                                         |
+| 79365       | Repeat, switch to new M matrix (usnitatly UQSF79295) at 3.1s | 3.5s. Saturated voltage                                      |                                              |
+| 79366       | Repeat pulse #79289 with MIMO-PFC and Ip controller with parameters (kp=-2e-5, Ki=-0.17, Kd=0; Tp=1e-4 s; Ti=100s) from 2.1s. Continue with MIMO-PFC and isoflux controller from 2.7s with a transition time on 0.5s (to 3.2s). | Bad. 2.1s. PID for RX2 need be zero  with new PCS version (05_10.186) |                                              |
+| 79367       | Repeat                                                       |                                                              |                                              |
+|             |                                                              |                                                              |                                              |
+|             |                                                              |                                                              |                                              |
 
 
 
