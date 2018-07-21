@@ -556,10 +556,10 @@ Location: 1st floor meeting, Division 7
 
 | shot number | setting                                                      | results                                         | comments                                                     |
 | ----------- | ------------------------------------------------------------ | ----------------------------------------------- | ------------------------------------------------------------ |
-| 79283       | Restore 78290,  using new M  matrix (usnitaly78290), using FF from futureshot :78290_usn_qsfCom | pcs watchdog                                    | 偶然事件？timeout; **USN**                                   |
+| ~~79283~~   | Restore 78290,  using new M  matrix (usnitaly78290), using FF from futureshot :78290_usn_qsfCom | pcs watchdog                                    | 偶然事件？timeout; **USN**                                   |
 | 79284       | Repeat,                                                      | Good. 7.16s                                     | oscillation may come from the strong SMBI3 injection; **USN** |
 | 79285       | Repeat, tune the density FF to get rid of the SMBI3 strong injection | Good. 7.1s                                      | LHW (4.6G 1.2MW + 2.45G 0.4MW) may relieve the oscillation; **USN** |
-| 79286       | Repeat, turn off all LHW                                     | Good. 7.17s                                     | Smaller oscillation; **USN**                                 |
+| **79286**   | Repeat, turn off all LHW                                     | Good. 7.17s                                     | Smaller oscillation; **USN**                                 |
 | 79287       | Repeat, change GI to 500 (from 10), TauI to 50 (from 1)      | Good. 7.33s                                     | Br & Bz, seg06 becomes better, but seg08 & 09 worse. **USN** |
 | 79288       | Repeat， change GI from 500 to 1000， TauI from 50s to 100s  | Good. 7.4s                                      | Almost same with 79287; **USN**                              |
 | **79289**   | Restore 78289 Discharge shape & ISOFLUX category, change the MIMO matrix with new one (usnitalyQSF289) | Good. 7.53s                                     | Perfect. No oscillation; **UQSF**                            |
@@ -568,7 +568,7 @@ Location: 1st floor meeting, Division 7
 | 79292       | Repeat, change GI to 500 (from 1000), TauI to 50 (from 100)  | big oscillation 3.6s then lost ctrl after 4.23s | Still no ideal why?                                          |
 | **79293**   | Restore 79289                                                | Good. 7.44s                                     | Repeatable; UQSF                                             |
 | 79294       | Restore 78271, change M matrix (usnitalyQST78271)            | Good. 6.72s                                     | Repeatable ; UQSF 300kA                                      |
-| **79295**   | Restore 79289, calling LHW from 2.9s, increase density from 3.0s to 3.3s from 1.2 to 2 |                                                 | UQSF 250kA, MIMO ctrl                                        |
+| **79295**   | Restore 79289, calling LHW from 2.9s, increase density from 3.0s to 3.3s from 1.2 to 2 | 3.27s                                           | UQSF 250kA, MIMO ctrl                                        |
 |             |                                                              |                                                 |                                                              |
 
 - [x] **3rd shift**:
@@ -596,12 +596,114 @@ Location: 1st floor meeting, Division 7
 | 79365       | Repeat, switch to new M matrix (usnitatly UQSF79295) at 3.1s | 3.5s. Saturated voltage                                      |                                              |
 | 79366       | Repeat pulse #79289 with MIMO-PFC and Ip controller with parameters (kp=-2e-5, Ki=-0.17, Kd=0; Tp=1e-4 s; Ti=100s) from 2.1s. Continue with MIMO-PFC and isoflux controller from 2.7s with a transition time on 0.5s (to 3.2s). | Bad. 2.1s. PID for RX2 need be zero  with new PCS version (05_10.186) |                                              |
 | 79367       | Repeat                                                       |                                                              |                                              |
-|             |                                                              |                                                              |                                              |
-|             |                                                              |                                                              |                                              |
 
 
 
+## 2018/07/19(Thursday)
 
+- [x] Future shot for USN:
 
+1. **78290_usn_siso_2**: retrive future shot setting from 78290_usn_siso, then reload the FF from future shot 78290_usn_qsfCom which is has new FF based on designed scenario from pcs_ff_180701.00030. Change IC to **current-driven mode**, using limitedcontrol for RZIp ctrl only, PID for limitedcontrol comes from 69888.
 
+   ** 78290_usn_siso is based on voltage-driven IC. But I already switched the IC to current driven mode now. Should pay more attantion if we want to run IC in voltage-driven mode.
+
+2. **79295_newFF**: based on 79295 (with LHW) and using new FF current for isoflux (Need change to RZIp ctrl too.) from Italy colleague with sheet 1 in file "IFF_79295_19_07.xlsx".
+
+3. **79295_newFF2**: based on 79295 using new FF current with sheet 2 in file "IFF_79295_19_07.xlsx" (only move the FF at 3.0s to new FF at 3.2s)
+
+   1. New Matrix from M_79295_17-July-2018_250kA_highBeta_UQSF.xls file are loaded into 79295_newFF2.
+
+## 2018/07/20(Friday)
+
+- [x] Shot lists:
+
+| shot number | setting                                                      | results                                                      | comments                                              |
+| ----------- | ------------------------------------------------------------ | ------------------------------------------------------------ | ----------------------------------------------------- |
+| 79549       | Gap ctrl test                                                | 4.74s                                                        |                                                       |
+| 79550       | Gap ctrl test, tune GI for Gap                               | 4.71s                                                        |                                                       |
+| 79551       | Gap ctrl test switch at 0.8s                                 | 1.06s                                                        |                                                       |
+|             | **IC in voltage-driven mode**                                |                                                              |                                                       |
+| ~~79604~~   | Restore future 79295_newFF, except the Density & gas injection; LHW 4.6G from 2.85s 2MW. Density increased from 1.2 at 3.0s to 2.0 at 3.2s till ramp-down | 3.47s; PS1 saturated too early (2.0s)                        | Too high density before reaching the MIMO phase; UQSF |
+| 79605       | repeat, tune density.                                        | 3.57s; PS1 saturation becomes better                         | UQSF                                                  |
+| **79606**   | Repeat, using FF from future shot: 79295_newFF2; extend the FF time to 3.2s. | 3.71s. No voltage saturation now, but oscillation killed the plasma. | UQSF                                                  |
+| 79607       | Repeat, switch to new M matrix at 3.3s (may fail)            | 3.6s. Not bad. But the switcher seems too quiet.             | UQSF                                                  |
+
+## 2018/07/21(Saturday)
+
+- [x] Shot lists:
+
+| shot number   | setting                                                      | results                                | comments                                                     |
+| ------------- | ------------------------------------------------------------ | -------------------------------------- | ------------------------------------------------------------ |
+| 79637         | Restore future shot: **78290_usn_siso_2**, ic in current-driven mode | 2.13s; VDE?; Why lost ctrl             | $\gamma \approx 100$                                         |
+| ~~79638~~     | DAQ communication error. Abort                               | No gas injection.                      |                                                              |
+| ~~79639~~     | Repeat                                                       | No gas injection                       |                                                              |
+| ~~79640~~     | Repeat 79637,                                                | PCS watchdog                           |                                                              |
+| **79641**     | Repeat 79637                                                 | 2.13s;                                 | same problem                                                 |
+| 79642         | Repeat 79637, M value for ZX1 to 2 (from 1.5)                |                                        |                                                              |
+| 79643         | Repeat, M_Zx1 = 1.5; Gd_Zx1 = -3e6 (from -1e6)               | 2.11s;                                 | limitedctrl里面Zp_GP在2.1s减小！！                           |
+|               | **IC** switch to **voltage-driven** mode                     |                                        |                                                              |
+| 79644         | Restore 79289,        trigger Vertical displacement for fix dz/dt signal from vloop | 2.39s; did not reach the setting phase |                                                              |
+| 79645         | Restore 79289,                                               | 4.82s; big oscillation                 |                                                              |
+| **79646**     | Repeat 79289, same setting.                                  | 7.51s                                  |                                                              |
+| 79647         | Repeat,  use dz/dt from dvloop @2.1s                         | 2.47s;large oscillation                | wyh                                                          |
+| **79648**     | Restore 79646, Increase LHW 4.6G from 0.6MW at 2.8s to 1.2MW at 3.4s; density from 1.2 at 3.0s to 1.8 at 3.5s | 3.45s                                  |                                                              |
+| 79649         | Repeat 79647, Zx2_taup = 0.1ms                               | 2.26s                                  | wyh                                                          |
+| 79650         | Repeat 79648, Tune FF in isousn                              | 3.34s                                  |                                                              |
+| 79651         | Repeat, tune density target                                  | 3.65s                                  |                                                              |
+| **79652**     | Restore **79606**, with 651's density, remove FF at 6.0s in isousn | 3.53s                                  | not good                                                     |
+| **79653**     | Repeat, but switched to new Mmatrix at 3.3s in isousn (M_79607_21-Jul-2018_250kA_highBeta_UQSF_2.xls) | 4.26s                                  |                                                              |
+| 79654         | restore 79647， K1->0.18                                     | 2.44                                   | wyh                                                          |
+| ~~79655~~     | Restore 79653, move the M matrix switch time to 3.2s         | watch dog problem                      |                                                              |
+| 79656         | Restore 79653, move the M matrix switch time to 3.2s         | 4.96s. Still with oscillation.         |                                                              |
+|               | **IC** siwtch to **current-driven** mode                     |                                        | USN                                                          |
+| 79657         | Restore 79641, remove PID changed for Z at 2.1               | 2.8s;                                  | Xpt ctrl is Br&Bz                                            |
+| 79658         | Repeat, using Xpoint ctrl for Xpt                            | 2.8s;                                  |                                                              |
+| 79659         | Repeat, increase M_Zx1 from 1e4 to 2e4                       | 2.88s; Better Zx ctrl                  |                                                              |
+| **79660**     | Repeat, increase M_Zx1 from 2e4 to 4e4                       | 2.94s. Zx1 drift direction changed     |                                                              |
+| 79661         | Repeat, reduce M_Zx1 from 4e4 to 3e4; using new basis shape from 79660@2.7s | 2.82s                                  | PS6&PS8 saturated                                            |
+| 79662         | Repeat, M_zx1=1e4; calling PID in isousn from ==52465== (isosn) | 2.91s                                  | PS6&PS8 saturated                                            |
+| 79663         | Repeat, tune seg02 & 05 PID to reduce the saturation on PS6&8 (GP from 1 to 0.13, remove GI) | 2.88s                                  | with LHW after 2.8s                                          |
+| **79664**     | Repeat, remove M_seg05_PS10; Gp for seg02&05 to 0.5          | 6.94s; Good                            | with LHW                                                     |
+| ==**79665**== | Repeat, add GI=5 for seg02&05                                | 7.18s; Good                            | with LHW                                                     |
+| 79666         | Repeat, add more LHW                                         | 7.22s; Good                            |                                                              |
+| ~~79667~~     | Repeat, call ECR (3.0s 1MW) in                               | 2.95s;                                 | 杂质爆发？                                                   |
+| 79668         | Repeat,  ECR (3.0s 1MW); 2.45G LHW 4.0s 0.5MW                | 6.98s;                                 |                                                              |
+| ~~79669~~     | Repeat, density target increased to 2.2;                     | Wrong setting. Protection              |                                                              |
+| ~~79670~~     | Repeat, fixed density chord calculation.                     | 3.23s                                  |                                                              |
+| 79671         | Repeat, tune the density (target & gas injection)            | 6.85s                                  |                                                              |
+| ~~79672~~     | Repeat, more slow LHW 4.6 input, reduced gas injection; Modified GI for seg02 & 05 to 10 (from 5) | 3.44s                                  |                                                              |
+| ~~79673~~     | Repeat, tune the gas                                         | No gas in                              |                                                              |
+| 79674~79676   | Repeat                                                       | 3.45s/3.39s/3.87s                      | Bad                                                          |
+| 79677         | Restore 79665                                                | 2.98s                                  | Bad                                                          |
+|               | <u>Gap ctrl test</u>                                         |                                        | wyh, yh                                                      |
+| ==79678==     | Restore 79636, 0.8s to gap ctrl                              | 8.06s                                  | Good                                                         |
+| 79679         | Repeat                                                       | 9.03s                                  | Good                                                         |
+| 79680         | Repeat, more LHW 4.6G to 2MW                                 | 9.39s                                  | Good                                                         |
+| 79681         | Repeat, PFC MIMO started at beginning.                       | Bad                                    |                                                              |
+| 79682         | Repeat, PFC MIMO started at 1.4s                             | bad. 1.71s                             |                                                              |
+| 79683         | Repeat, Gap ctrl in ohmic shot                               | 8.18s                                  | Good                                                         |
+| 79697         | Restore 79680, NBI ctrled by PCS test                        | watch dog                              |                                                              |
+| 79698         | Repeat                                                       | 9.55s                                  | Good                                                         |
+|               | <u>USN scenario with SISO ctrl</u>                           |                                        |                                                              |
+| ~~79699~~     | restore 79665,                                               | watch dog                              |                                                              |
+| 79700         | Restore 79665,                                               | 7.36s                                  | Good                                                         |
+| 79701         | Repeat, fixed the density chord calculation problem; more LHW | 7.13s                                  | Good                                                         |
+| ~~79702~~     | Repeat, increase density & LHW                               | Bad breakdown                          |                                                              |
+| ~~79703~~     | Repeat                                                       | Bad breakdown                          |                                                              |
+| ~~79704~~     | Repeat                                                       | watch dog                              |                                                              |
+| 79705         | Repeat, increase density & LHW (2.2MW)                       | 7.28s                                  |                                                              |
+| 79706         | Repeat, using POINT FB density                               | 7.28s                                  |                                                              |
+| 79707         | Repeat,                                                      | 7.1s                                   |                                                              |
+| 79708         | Repeat, start LHW earlier (2.6s)                             | 7.0s                                   |                                                              |
+| 79709         | Repeat, start LHW earlier (2.5s), increase IP from 0.25MA at 4.0s to 0.35MA at 5.0s (6.5s ramp-down) | 3.16s; bad                             |                                                              |
+| ==**79710**== | Repeat, start LHW 2.6s; 电流控制                             | 7.41s; Good                            | 升IP电流                                                     |
+|               | ==<u>IC in voltage-driven mode</u>==                         |                                        | UQSF shape                                                   |
+| ~~79711~~     | Restore  79289; fix the density chord calculation; PFC MIMO test from 4.0s to 5.0s; LHW from 2.7s | 2.1s because of Rx_2                   | Bad setting                                                  |
+| 79712         | Restore  **79289**; fix the density chord calculation; PFC MIMO test from 4.0s to 5.0s; Remove LHW trigger | 4.94s. PFC MIMO problem                |                                                              |
+| ~~79713~~     | Repeat, remove PFC MIMO; change the plasma shape (Rp) from 3.5s to 4.0s (0.5cm) | 0.81s                                  |                                                              |
+| **79714**     | Repeat,                                                      | 5.23s; density too high                |                                                              |
+| 79715         | Repeat, increase Rx2_Taup=10                                 | 2.45s;                                 | high frequency oscillation                                   |
+| 79716         | Repeat, increase Rx2_Taup=20                                 | 2.31s                                  | HFO                                                          |
+| 79717         | Restore 79708, but using voltage IC ctrl                     | watchdog                               |                                                              |
+| **79718**     | Restore 79708, IC in voltage-driven mode                     | 6.74s                                  | Not bad;When IC in voltage-driven mode, the IC current pass over zero, the oscillation shows up |
 
