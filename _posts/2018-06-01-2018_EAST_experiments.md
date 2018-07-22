@@ -654,7 +654,7 @@ Location: 1st floor meeting, Division 7
 | **79653**     | Repeat, but switched to new Mmatrix at 3.3s in isousn (M_79607_21-Jul-2018_250kA_highBeta_UQSF_2.xls) | 4.26s                                  |                                                              |
 | 79654         | restore 79647， K1->0.18                                     | 2.44                                   | wyh                                                          |
 | ~~79655~~     | Restore 79653, move the M matrix switch time to 3.2s         | watch dog problem                      |                                                              |
-| 79656         | Restore 79653, move the M matrix switch time to 3.2s         | 4.96s. Still with oscillation.         |                                                              |
+| **79656**     | Restore 79653, move the M matrix switch time to 3.2s         | 4.96s. Still with oscillation.         |                                                              |
 |               | **IC** siwtch to **current-driven** mode                     |                                        | USN                                                          |
 | 79657         | Restore 79641, remove PID changed for Z at 2.1               | 2.8s;                                  | Xpt ctrl is Br&Bz                                            |
 | 79658         | Repeat, using Xpoint ctrl for Xpt                            | 2.8s;                                  |                                                              |
@@ -694,7 +694,7 @@ Location: 1st floor meeting, Division 7
 | 79705         | Repeat, increase density & LHW (2.2MW)                       | 7.28s                                  |                                                              |
 | 79706         | Repeat, using POINT FB density                               | 7.28s                                  |                                                              |
 | 79707         | Repeat,                                                      | 7.1s                                   |                                                              |
-| 79708         | Repeat, start LHW earlier (2.6s)                             | 7.0s                                   |                                                              |
+| **79708**     | Repeat, start LHW earlier (2.6s)                             | 7.0s                                   |                                                              |
 | 79709         | Repeat, start LHW earlier (2.5s), increase IP from 0.25MA at 4.0s to 0.35MA at 5.0s (6.5s ramp-down) | 3.16s; bad                             |                                                              |
 | ==**79710**== | Repeat, start LHW 2.6s; 电流控制                             | 7.41s; Good                            | 升IP电流                                                     |
 |               | ==<u>IC in voltage-driven mode</u>==                         |                                        | UQSF shape                                                   |
@@ -705,5 +705,61 @@ Location: 1st floor meeting, Division 7
 | 79715         | Repeat, increase Rx2_Taup=10                                 | 2.45s;                                 | high frequency oscillation                                   |
 | 79716         | Repeat, increase Rx2_Taup=20                                 | 2.31s                                  | HFO                                                          |
 | 79717         | Restore 79708, but using voltage IC ctrl                     | watchdog                               |                                                              |
-| **79718**     | Restore 79708, IC in voltage-driven mode                     | 6.74s                                  | Not bad;When IC in voltage-driven mode, the IC current pass over zero, the oscillation shows up |
+| **79718**     | Restore 79708, IC in voltage-driven mode                     | 6.74s                                  | Not bad;When IC in voltage-driven mode, the IC current pass over zero, the oscillation shows up; USN |
+
+## 2018/07/22(Sunday)
+
+- [x] Shot lists:
+
+| shot number | setting                                                      | results                  | comments                |
+| ----------- | ------------------------------------------------------------ | ------------------------ | ----------------------- |
+| 79753       | PFC MIMO test (PF1~6)                                        |                          |                         |
+| 79754       | PFC MIMO test (PF7~14)                                       |                          |                         |
+| 79755       | PFC MIMO test (PF1-14)                                       |                          |                         |
+| 79756       | Ohmic reference shot                                         | 9.59s                    |                         |
+|             | **<u>IC in voltage-driven mode</u>**                         |                          |                         |
+| 79757       | Restore 79718, using basis-shape (6) in isousn               | 6.91s; oscillation still |                         |
+| 79758       | Repeat, IP_GP=-7e-4 (from -6e-4) at 0.5s;  z ctrl with new $dz/dt$ estimator by vloop between 2.0s and 2.5s. | 2.1s;                    | bad; 方向反了           |
+| **79759**   | Repeat, IP_GD=-0.01 (from -0.008) at 0.8s; change direction of z ctrl with new $dz/dt$ estimator by vloop (2.0~2.5s);Zx2_GP = 15 (from -15) | 3.94s                    |                         |
+| 79760       | Repeat, Zx2_Gp=30 (from 15)                                  | 3.66s                    |                         |
+| 79761       | Repeat, new dz/dt estimator start from 2.0s to end           | 3.82s                    | Shape oscillation       |
+| 79762       | Repeat, switch basis-shape to 7 in isosun                    | 3.54s                    |                         |
+| ~~79763~~   | Repeat, Seg01_Gd = 20 (from 10)                              | watch dog                | Restart PCS             |
+| 79764       | restore 79712 except Density & Gas; Then remove PFC MIMO; using new M matrix (usnwyhUQSF289); | 6.64s                    | wyh's MIMO ctrl         |
+| 79765       | Restore 78656 (isousn); switch to new Matrix (79656Uqsf4) at 3.2s; LHW 4.6G from 2.8s | 4.18s                    | Bad; New M matrix Italy |
+| 79766       | Repeat, increase density from 1.2 at 2.8s to 1.6 at 3.3s.    | 4.21s                    | Not good.               |
+| 79767       | Restore 79764, using new M matrix                            | 6.68s                    | wyh                     |
+| 79768       | Restore 79766, switch to new Matrix (79656Uqsf7) at 3.2s     | 4.4s                     | M_italy                 |
+| 79769       | Restore 79712, using PFC MIMO from Italy colleague from beginning | 0.42s; **BAD**           | Ohmic shot              |
+|             | **<u>IC in current-driven mode</u>**                         |                          |                         |
+| 79770       | Restore **79708** (USN), except Density & Gas; Restore FF from 79289; Basis shape & which basis shape too; Rref, Zref, Zx1ref too. | 7.32s                    | UQSF/ohm                |
+| 79771       | Repeat                                                       | 7.13s                    | UQSF/ohm                |
+| 79772       | Repeat, using PS5 to ctrl Rx1 only                           | 7.18s                    | UQSF/ohm                |
+| 79773       | Repeat, but restore PID & M matrix from 71464                | 3.77s;                   | UQSF/ohm                |
+| **79774**   | Repeat, Seg02_GP = 0.5 (from 0.13), Seg02_GI=0 (from 5)      | 7.08s                    |                         |
+| **79775**   | Restore 79708 except density & gas, using basis-shape 6; Rref=1.885m at limitedcontrl | 7.09s; Good              | SISO 79708 USN/ohm      |
+| ~~79776~~   | Repeat, calling LHW from 2.8s; Density from 1.2 at 2.8s to 1.6 at 3.3s. | 4.1s                     | USN/LHW                 |
+| ~~79777~~   | Repeat, LHW from 0.6MW at 3.2s to 2.2MW at 4.0s; density from 1.2 at 2.9s to 1.6 at 3.2s. | 4.48s                    | USN/LHW                 |
+| 79778       | Repeat, LHW from 0.6MW at 3.6s to 2.2MW at 4.2s; density from 1.2 at 3.0s to 2.0 at 3.4s. | 5.5s                     | USN/LHW                 |
+| **79779**   | Repeat, gas puffing in front of LHW antenna; LHW 2.45G from 2.7s with 0.5MW | 7.02s; Good              | USN/LHW                 |
+| ~~79780~~   | Repeat, ECRH1&3 from3.7s (1MW 2s)                            | HCN wrong.               | USN/LHW/ECR             |
+| 79781       | Repeat, ECRH1&3 from3.7s (1MW 2s)                            | 4.41s                    | USN/LHW/ECR             |
+| **79782**   | Repeat, Seg01_Gp = 0.5 (from 1); ECRH1 3.5s in; ECRH3 4.2s in; | 6.92s                    | USN/LHW/ECR             |
+| ~~79783~~   | Repeat, M_seg09_PS11 = 0 (from -1e4)                         | 4.05s; MARFE?            | USN/LHW/ECR             |
+| 79784       | Repeat,                                                      | 7.24s                    | USN/LHW/ECR             |
+| 79785       | Repeat,  turn on z ctrl with new dz/dt estimator by vloop from 2.0s to 2.5s | 7.12s                    | ...                     |
+| 79786       | Repeat, time window from 2.0s to 2.7s.                       | 7.17s                    | ...                     |
+| **79787**   | Repeat, turn on z ctrl with new dz/dt estimator by vloop from 2.0s to end | 7.09s                    | ...                     |
+| 79788       | Repeat, increase density to 2.3 (from 2.0) at 3.4s;   increase zx2 Gp 100->200(2.0s~2.7s) fixed dz/dt from vloop(4.0s~5.0s) | 6.58s                    | ...                     |
+| 79789       | Repeat, using POINT FB, return Zx2_Gp back                   | 7.24s                    | ...                     |
+| 79790       | Repeat, NBI in from 5.0 --> 6.0s.                            | 7.26s                    | USN/LHW/ECR/NBI         |
+| 79791       | Repeat, increase NBI power to 55kV                           | 7.12                     | ...                     |
+| ~~79792~~   | Repeat, GDx10; Taud/10                                       | 2.95s; bad               |                         |
+| ~~79793~~   |                                                              | watchdog                 |                         |
+| ~~79794~~   | Repeat, Gd_seg*: (2.7s,0) -> (3.1s, 100); Gd_RxZx:(2.7s,0) -> (3.1s, 200); | 2.95s; bad               |                         |
+| 79795       | Repeat, Gd_seg*: (2.7s,0) -> (3.5s, 100); Gd_RxZx:(2.7s,0) -> (3.5s, 200); | 3.07s; bad               |                         |
+| 79796       | Restore 79791; $G_d \times 2$  & $\tau_d \times 0.5$ at 4.001 | 7.12s                    |                         |
+| 79797       | Repeat, FF transition initial ratio to 0.05 from 0.1         | 7.16s                    |                         |
+| **79798**   | Repeat, FF transition initial ratio to 0.9from 0.05; transition interval to 0.01s (from 0.1) | 5.6s;                    | 消除bump                |
+| 79799       | Repeat, using new basis-shape 7                              |                          |                         |
 
